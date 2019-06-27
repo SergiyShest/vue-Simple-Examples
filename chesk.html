@@ -1,0 +1,28 @@
+<div id="app" class="col-md-4">
+    <template v-for="user in users">
+        <input type="checkbox"  v-bind:value="user"  v-model="selectedUsers">
+        <label>{{user.name}}</label><br>
+    </template>
+     
+    <ul>
+        <li v-for="user in selectedUsers">{{user.name}} - {{user.age}}</li>
+    </ul>
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            users:[
+               {ch:false, name:'a', age:22},
+                {ch:true,name:'s', age:25},
+                {ch:false, name:'Tom', age:22},
+                {ch:true,name:'Bob', age:25},
+                {ch:false,name:'Sam', age:28},
+                {ch:true,name:'Alice', age:26}
+            ],
+            selectedUsers:[{ch:false, name:'Tom', age:22},
+                {ch:true,name:'Bob', age:25} ]
+        }
+    });
+</script>

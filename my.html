@@ -1,0 +1,42 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<
+<div id="app">
+	<div v-for="item in options" >
+	<input  type="checkbox" v-bind:value="item" v-model="values" />
+	<span>{{item }}</span>
+	</div>
+	<pre>{{ values }}</pre>
+	<pre>{{ fullName }}</pre>
+  </div>
+ 
+  
+  <script>
+
+     new Vue({
+    el: "#app",
+	components: {
+   	
+	},
+	data: {
+	res:'',	
+  	values: ['Vue.js','JavaScript'],
+  	options: ['sssipt', 'Vue.js','JavaScript', 'Vue-Multiselect', 'JavaScript','Vuelidate']
+	},
+	computed: {
+  fullName: {
+    // геттер:
+    get: function () {
+      return this.values.join(';');
+    },
+    // сеттер:
+    set: function (newValue) {
+
+	  this.values=newValue.split(';')
+    }
+  }
+	},
+  methods: {
+
+  }
+});//.$mount('#app')
+  </script>

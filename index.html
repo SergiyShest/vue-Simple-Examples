@@ -1,0 +1,42 @@
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
+<link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
+
+<div id="app">
+    <multiselect 
+      v-model="value" 
+      :options="options"
+      :multiple="true"
+      track-by="library"
+      :custom-label="customLabel"
+      >
+    </multiselect>
+    <pre>{{ value }}</pre>
+  </div>
+ 
+  
+  <script>
+    
+  
+    // register globally
+     // Vue.component('multiselect', Multiselect)
+     new Vue({
+    el: "#app",
+	components: {
+   	Multiselect: window.VueMultiselect.default
+	},
+	data: {
+  	value: { language: 'JavaScript', library: 'Vue-Multiselect' },
+  	options: [
+    	{	language: 'JavaScript', library: 'Vue.js' },
+      { language: 'JavaScript', library: 'Vue-Multiselect' },
+      { language: 'JavaScript', library: 'Vuelidate' }
+    ]
+	},
+  methods: {
+  	customLabel (option) {
+      return `${option.library} - ${option.language}`
+    }
+  }
+});//.$mount('#app')
+  </script>
