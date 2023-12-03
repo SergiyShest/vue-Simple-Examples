@@ -1,0 +1,21 @@
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    text-align: start; 
+    background-color: aqua; 
+    border: solid 1px;
+}
+
+.title-col{
+  width:100px
+}
+.value-col{
+  width:200px
+}
+
+.inp{
+  height:30px;
+  margin:3px
+}

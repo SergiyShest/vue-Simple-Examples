@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>HTML</title>
+  </head>
+  <body>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script>  
+ <script src="vue.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+<!-- <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>  
+<script src="vueComponent.js"></script> -->
+<link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
+<link rel="stylesheet" href="example.css">
+<div id="app">
+    <!-- <multiselect 
+      v-model="value" 
+      :options="options"
+      :multiple="true"
+      track-by="library"
+      :custom-label="customLabel"
+      >
+    </multiselect> -->
+    <pre>{{ str }}</pre>
+    <!-- <button-counter></button-counter>
+    <kf-input :item="item.textEx" ></kf-input>
+    <kf-input :item="item.numberEx"></kf-input> 
+    <kf-input :item="item.dateEx"></kf-input>         -->
+  </div>
+ 
+  
+  <script>
+ var date= new Date()
+ console .log(date)  
+var string = numeral(1054563450000).format('0,0.00').replaceAll(',',' ');
+
+  
+    // register globally
+     // Vue.component('multiselect', Multiselect)
+//const app = Vue.createApp({    
+ let vue_=  new Vue({
+    el: "#app",
+	// components: {
+  //  	Multiselect: window.VueMultiselect.default,
+
+
+	// },
+	data: {
+    str:string,
+  	value: { language: 'JavaScript', library: 'Vue-Multiselect' },
+  	options: [
+    	{	language: 'JavaScript', library: 'Vue.js' },
+      { language: 'JavaScript', library: 'Vue-Multiselect' },
+      { language: 'JavaScript', library: 'Vuelidate' }
+    ],
+	  item:{
+     textEx: { type:'text',  title: 'textEx', value: 'Vue.js' },
+     numberEx: {type:'number', title: 'numberEx', value: 3000000.00 },
+     dateEx: { type:'date',title: 'numberEx', value: '12/12/2023' }
+    }
+  },
+  methods: {
+  	customLabel (option) {
+      return `${option.library} - ${option.language}`
+    }
+  }
+});//.$mount('#app')
+  </script>
+   </body>
+   </html>
