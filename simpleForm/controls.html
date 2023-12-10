@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>HTML</title>
+  </head>
+  <body>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script>  
+ <script src="vue.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+<!-- <script src="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.js'"></script> --> 
+<script   src="vueComponents.js"></script> 
+<link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
+<link rel="stylesheet" href="example.css">
+<div id="app">
+    <!-- <multiselect 
+      v-model="value" 
+      :options="options"
+      :multiple="true"
+      track-by="library"
+      :custom-label="customLabel"
+      > <button-counter></button-counter>
+    </multiselect> -->
+    <pre>{{ str }}   </pre>
+    <H6  >--{{ item.textEx }} --  </H6>
+      <H6  >--{{ item.lan}} --  </H6>  
+    <kf-text text="textEx" v-model="item.textEx" req></kf-text>
+    <kf-num text="number" v-model="item.numberEx"></kf-num> 
+    <!-- <kf-input type="date" text="date"   v-model="item.dateEx"></kf-input> --> 
+    <kf-combo text="combo"   v-model="item.lan"  :items="options" req></kf-input>          
+  </div>
+ 
+  
+  <script>
+ var date= new Date()
+ console .log(date)  
+var string = numeral(1054563450000).format('0,0.00').replaceAll(',',' ');
+
+  
+    // register globally
+     // Vue.component('multiselect', Multiselect)
+//const app = Vue.createApp({    
+ let vue_=  new Vue({
+    el: "#app",
+	// components: {
+  //  	Multiselect: window.VueMultiselect.default,
+
+
+	// },
+	data: {
+    str:string,
+  	value: { language: 'JavaScript', library: 'Vue-Multiselect' },
+  	options: [
+    	{ id:1,	name: 'JavaScript', library: 'Vue.js' },
+      { id:2, name: 'C#', library: 'Vue-Multiselect' },
+      { id:3, name: 'Java ', library: 'Vuelidate' }
+    ],
+	  item:{
+     textEx: 'Vue.js',
+     numberEx: 3000000.00,
+     dateEx: '12/12/2023',
+     lan:2
+    }
+  },
+  methods: {
+  	customLabel (option) {
+      return `${option.library} - ${option.language}`
+    }
+  }
+});//.$mount('#app')
+  </script>
+   </body>
+   </html>
