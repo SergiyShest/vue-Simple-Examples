@@ -1,49 +1,156 @@
-
-Vue.component('button-counter', {
+var compBase = {
+  props: {
+    'text': String,
+    'req': Boolean,
+  },
   data: function () {
     return {
-      count: 1
+      valueInt: null,
+      valid: true,
+      reqText: 'Значение должно быть заполнено!!!',
+      notValidText: null
     }
   },
-  template: '<button v-on:click="count= count*2">You clicked me {{ count }} times.</button>'
+  watch: {
+    immediate: true,
+    value(val) {
+      console.log(val)
+      this.valueInt = val;
+    }
+  },
+  methods: {
+    //virtual method 
+    virtChange(val){
+      this.valueInt = val
+      this.$emit('input', val)//event to parent
+    }
+   ,
+    valChanged(event) {
+      this.virtChange( event.target.value)
+      this.Validate(event.target.value)
+    },
+
+    Validate(val) {
+
+      if (this.req && !val) {
+        this.valid = false
+        this.notValidText = this.reqText;
+      } else {
+        this.valid = true
+        this.notValidText = null;
+      }
+    },
+  },
+  mounted: function () {
+    this.valueInt = this.value
+  }
+}
+
+Vue.component('kf-text', {
+  mixins: [compBase],
+  props: {
+    'value': { type: String },
+  },
+
+  methods: {
+  },
+  template: `
+   <div class="flex-row" >
+   <h3 class="title-col" >{{ text }}:</h3>
+   
+   <input 
+    class="value-col inp " :class="{ invalid: !valid }" 
+    :title="notValidText" 
+     v-bind:value="value"
+     v-on:input="valChanged($event)"
+   />
+
+   <img v-if="!valid" src="invalid.png"></img> 
+   </div>
+ `
 })
 
-Vue.component('kf-input', {
-    props: {
-    'item': Object,
-    'req': Boolean
+Vue.component('kf-combo', {
+  mixins: [compBase],
+  props: {
+    'value': { type: [String, Number] },
+    "items": Array
   },
-    data: function () {
-      return {
-        valid: true,
-        reqText:'Значение должно быть заполнено!!!',
-        tooltip:null
-      }
-    },
-    methods:{}
-    ,
+  methods: {
+  },
 
-    watch: { 
-      item:{
-        immediate: true,
-        deep:true, 
-      handler (newVal, oldVal) {
-        console.log('Prop changed: ', newVal, ' | was: ', oldVal)
-        if(this.req && !newVal.value){
-          this.valid = false
-          this.tooltip=this.reqText;
-        }else{
-          this.valid = true
-          this.tooltip=null;          
-        }
-      }
+  template: `
+   <div class="flex-row" >
+   <h3 class="title-col" >{{ text }}:</h3>
+
+   <select 
+    class="value-col inp " :class="{ invalid: !valid }" :title="notValidText" 
+    v-model="valueInt"
+    v-on:input="valChanged($event)"
+  >
+  <option v-for="item in items" :key="item.id"   v-bind:value="item.id" >{{item.name}}  </option>
+  </select>
+   <img v-if="!valid" src="invalid.png"></img> 
+   </div>
+ `
+})
+
+Vue.component('kf-num', {
+  mixins: [compBase],
+  props: {
+    'value': { type: [Number,String] },
+  },
+  methods: {
+    virtChange(val){
+      val = reFormatNum(val)
+      this.$emit('input', val)//event to parent
     }
-    },
+  },
+  mounted: function () {
+    this.valueInt = formatNum(this.value)
+  },
+  template: `
+   <div class="flex-row" >
+   <h3 class="title-col" >{{ text }}:</h3>
+   
+   <input 
+    class="value-col inp " :class="{ invalid: !valid }" 
+    :title="notValidText" 
+     v-bind:value="valueInt"
+     v-on:input="valChanged($event)"
+     onblur="onBlur(this)"
+     onfocus="onFocus(this)"     
 
-    template: '<div class="flex-row" >'+
-    '<h3 class="title-col" >{{ item.title }}:</h3>'+
-    '  <input '+
-    ':type="item.type" class="value-col inp " :class="{ invalid: !valid }" :title="tooltip" '+
-    '   v-model="item.value"></input><img v-if="!valid" src="invalid.png"></img> '+
-    '</div>'
-  })
+   />
+   <img v-if="!valid" src="invalid.png"></img> 
+   </div>
+ `
+})
+
+
+// import { w2field, query } from
+// General
+
+//new w2field('float', { el: query('#eu-float')[0], groupSymbol: ' ', precision: 3 })
+
+function onBlur(control) {
+  control.type = "text";
+  control.value = formatNum(control.value)
+  console.log('blur')
+
+}
+
+function onFocus(control) {
+  control.value = reFormatNum(control.value)
+  control.type = "number";
+  console.log(control.value)
+
+}
+
+function formatNum(val) {
+  return numeral(val).format('0,0.00').replaceAll(',', ' ');
+}
+
+function reFormatNum(val) {
+  return val.replaceAll(' ', '');
+}
