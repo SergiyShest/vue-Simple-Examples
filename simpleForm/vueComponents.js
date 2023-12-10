@@ -69,7 +69,28 @@ Vue.component('kf-text', {
    </div>
  `
 })
+Vue.component('kf-date', {
+  mixins: [compBase],
+  props: {
+    'value': { type: [String,Date] },
+  },
 
+  methods: {
+  },
+  template: `
+   <div class="flex-row" >
+   <h3 class="title-col" >{{ text }}:</h3>
+ 
+   <input type='date'
+    class="value-col inp " :class="{ invalid: !valid }" 
+    :title="notValidText" 
+     v-bind:value="value"
+     v-on:input="valChanged($event)"
+   />
+   <img v-if="!valid" src="invalid.png"></img> 
+   </div>
+ `
+})
 Vue.component('kf-combo', {
   mixins: [compBase],
   props: {
@@ -120,7 +141,6 @@ Vue.component('kf-num', {
      v-on:input="valChanged($event)"
      onblur="onBlur(this)"
      onfocus="onFocus(this)"     
-
    />
    <img v-if="!valid" src="invalid.png"></img> 
    </div>

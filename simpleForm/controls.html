@@ -25,12 +25,14 @@
       > <button-counter></button-counter>
     </multiselect> -->
     <pre>{{ str }}   </pre>
-    <H6  >--{{ item.textEx }} --  </H6>
-      <H6  >--{{ item.lan}} --  </H6>  
+    <H6  >--text:{{ item.textEx }} --  </H6>
+      <H6  >--number:{{ item.numberEx}} --  </H6> 
+      <H6  >--date:{{ item.dateEx}} --  </H6>
+      <H6  >--combo:{{ item.lan}} --  </H6>  
     <kf-text text="textEx" v-model="item.textEx" req></kf-text>
     <kf-num text="number" v-model="item.numberEx"></kf-num> 
-    <!-- <kf-input type="date" text="date"   v-model="item.dateEx"></kf-input> --> 
-    <kf-combo text="combo"   v-model="item.lan"  :items="options" req></kf-input>          
+    <kf-date type="date" text="date"   v-model="item.dateEx" ></kf-date> 
+    <kf-combo text="combo"   v-model="item.lan"  :items="options" req></kf-combo>          
   </div>
  
   
@@ -61,7 +63,7 @@ var string = numeral(1054563450000).format('0,0.00').replaceAll(',',' ');
 	  item:{
      textEx: 'Vue.js',
      numberEx: 3000000.00,
-     dateEx: '12/12/2023',
+     dateEx: '2023-12-14',
      lan:2
     }
   },
