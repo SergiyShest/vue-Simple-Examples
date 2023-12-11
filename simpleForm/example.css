@@ -4,10 +4,10 @@
     justify-items: center;
     align-items: center;
     text-align: start; 
-    background-color: aqua; 
+  /* background-color: aqua; 
     border: solid 1px;
+ */
 }
-
 .title-col{
   width:100px
 }
@@ -20,8 +20,9 @@
   margin:3px
 }
 .invalid{
-  border: red solid 1px;
+  border: red solid 2px;
 }
+
 .tab-button {
   padding: 6px 10px;
   border-top-left-radius: 3px;
