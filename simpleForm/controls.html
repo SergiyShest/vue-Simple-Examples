@@ -29,8 +29,9 @@
       <H6  >--number:{{ item.numberEx}} --  </H6> 
       <H6  >--date:{{ item.dateEx}} --  </H6>
       <H6  >--combo:{{ item.lan}} --  </H6>  
-    <kf-text text="textEx" v-model="item.textEx" req></kf-text>
-    <kf-num text="number" v-model="item.numberEx" req requretext="Error"></kf-num> 
+    <kf-text text="textEx" v-model="item.textEx" req :rules="[rules.counter]" ></kf-text>
+    <kf-text text="textEx" v-model="item.textEx" req :rules="[rules.counter,rules.phone]" ></kf-text> 
+    <kf-num text="number" v-model="item.numberEx" req requretext="Error" :rules="[rules.fieldsNumb]"  ></kf-num> 
     <kf-date type="date" text="date"   v-model="item.dateEx" req ></kf-date> 
     <kf-combo text="combo"   v-model="item.lan"  :items="options" req></kf-combo>          
   </div>
@@ -49,8 +50,6 @@ var string = numeral(1054563450000).format('0,0.00').replaceAll(',',' ');
     el: "#app",
 	// components: {
   //  	Multiselect: window.VueMultiselect.default,
-
-
 	// },
 	data: {
     str:string,
@@ -66,6 +65,22 @@ var string = numeral(1054563450000).format('0,0.00').replaceAll(',',' ');
      dateEx: '2023-12-14',
      lan:2
     }
+    , 
+      rules: {
+        required: (value) => !!value || "Required.",
+        counter: (value) => (value && value.length <= 10) || "Max 10 characters",
+        fieldsNumb: (value) => (!value || value && value <= 5) || "Max 5 ",
+        phone:(value) => {
+           if(value)
+           {
+               value=value.replaceAll(" ").replaceAll("-")
+               const res = /\d{8,10}/.test(value)
+               if(!res) return "telephone number mast conatins only number or white space"; 
+           }
+           return true;
+        },
+       // phone:(value) => (!value||/^\\s?[\\s(]?\\s?\\d[\\s-]?\\d[\\s-]?\\d[\\s\\-)]?\\s?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s]?$|^[\\+]?\\d\\s?[\\s(]?\\s?\\d[\\s-]?\\s?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?\\d[\\s-]?/.test(value))||"The valid number must contain 10 numbers +34 (000) 000 00 or 8 numbers (000) 000 00" 
+    },
   },
   methods: {
   	customLabel (option) {

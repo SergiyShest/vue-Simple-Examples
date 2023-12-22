@@ -2,20 +2,21 @@ var compBase = {
   props: {
     'text': String,
     'req': Boolean,
-    'requretext': {type:String, default:'Значение должно быть заполнено!!!'}
+    'rules':Array
   },
   data: function () {
     return {
       valueInt: null,
       valid: true,
-      
+      reqText: 'Значение должно быть заполнено!!!',
       notValidText: null
     }
   },
   watch: {
     immediate: true,
     value(val) {
-       this.valueInt = val;
+      console.log(val)
+      this.valueInt = val;
     }
   },
   methods: {
@@ -31,13 +32,30 @@ var compBase = {
     },
 
     Validate(val) {
+        this.valid = true
+        this.notValidText = '';
+        let errList=[]
 
       if (this.req && !val) {
         this.valid = false
-        this.notValidText = this.requretext;
+        this.notValidText = this.reqText;
       } else {
-        this.valid = true
-        this.notValidText = null;
+      
+         if(this.rules){
+          this.rules.forEach(element => {
+
+             let valResult=element(val)
+             {
+                if(valResult!==true){
+                  errList.push(valResult)
+                  this.valid = false
+                }
+             }
+          });
+          if(!this.valid){
+            this.notValidText=errList.join('\n');          
+          }
+        }
       }
     },
   },
@@ -69,7 +87,6 @@ Vue.component('kf-text', {
    </div>
  `
 })
-
 Vue.component('kf-date', {
   mixins: [compBase],
   props: {
@@ -92,7 +109,6 @@ Vue.component('kf-date', {
    </div>
  `
 })
-
 Vue.component('kf-combo', {
   mixins: [compBase],
   props: {
@@ -144,9 +160,7 @@ Vue.component('kf-num', {
      onblur="onBlur(this)"
      onfocus="onFocus(this)"     
    />
-
    <img v-if="!valid" src="invalid.png"></img> 
-
    </div>
  `
 })
@@ -160,6 +174,7 @@ Vue.component('kf-num', {
 function onBlur(control) {
   control.type = "text";
   control.value = formatNum(control.value)
+
 
 }
 
