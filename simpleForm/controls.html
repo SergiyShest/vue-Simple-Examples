@@ -29,13 +29,14 @@
       <H6  >--number:{{ item.numberEx}} --  </H6> 
       <H6  >--date:{{ item.dateEx}} --  </H6>
       <H6  >--combo:{{ item.lan}} --  </H6>  
-    <kf-text text="textEx" v-model="item.textEx" req :rules="[rules.counter]" ></kf-text>
-    <kf-text text="textEx" v-model="item.textEx" req :rules="[rules.counter,rules.phone]" ></kf-text> 
-    <kf-num text="number" v-model="item.numberEx" req requretext="Error" :rules="[rules.fieldsNumb]"  ></kf-num> 
-    <kf-date type="date" text="date"   v-model="item.dateEx" req ></kf-date> 
+    <kf-field text="Input" v-model="item.InputText" req    input-style="color: red;font-size:25px " input-class="value-col300"    ></kf-field>  
+    <kf-input text="textEx" v-model="item.textEx"    req   input-style="color: red;font-size:25px "  input-class="value-col300"></kf-input>
+    <kf-input text="textEx" v-model="item.textEx"    req :rules="[rules.counter,rules.phone]" ></kf-input> 
+    <kf-num text="number" v-model="item.numberEx"   req requretext="Error" :rules="[rules.fieldsNumb]"  ></kf-num> 
+    <kf-date type="date" text="date" v-model="item.dateEx" req ></kf-date> 
     <kf-combo text="combo"   v-model="item.lan"  :items="options" req></kf-combo>          
   </div>
- 
+ S
   
   <script>
  var date= new Date()
@@ -60,6 +61,7 @@ var string = numeral(1054563450000).format('0,0.00').replaceAll(',',' ');
       { id:3, name: 'Java ', library: 'Vuelidate' }
     ],
 	  item:{
+     InputText: 'InputText',
      textEx: 'Vue.js',
      numberEx: 3000000.00,
      dateEx: '2023-12-14',
