@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>HTML</title>
+  </head>
+  <body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+
+<link rel="stylesheet" href="example.css">
+<script   src="vueComponents.js"></script> 
+
+
+
+  <div id="app">
+    <kf-input 
+      text="Your Name" 
+      v-model="name"
+      :req="true"
+      :valudateonload="true"
+      :requretext="'Please enter your name'"
+      :rules="[rules.containsOnlyRussianLetter]"
+      inputStyle="{ color: 'blue', fontSize: '16px' }"
+      inputClass="custom-input-class"
+    ></kf-input>
+    
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        name: '',
+        rules:{  containsOnlyRussianLetters:function(val) {
+           return (!val)||/^[а-яё\s]+$/i.test(val)||'Значение должно содержать только русские буквы';
+
+        }}
+      },
+      methods: {
+          //  логика валидации 
+          // должна вернуть true, если значение допустимо, или строку с сообщением об ошибке
+      //,
+        // min2(val) {
+        //   return (!val)||!val.length<3|| "Значение должно содержать минимум 2 символа.";
+           
+        // },
+        // max10(val) {
+        //   return (!val)||!val.length>10|| "Значение должно содержать максимум 50 символов.";
+           
+        // },
+        
+      }
+    });
+  </script>
+</body>
+</html>
